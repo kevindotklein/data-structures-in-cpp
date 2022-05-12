@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,10 +11,12 @@ struct Node* head;
 
 void insertAt(int data, int n);
 void deleteAt(int n);
+void reverse();
 void print();
 
 int main(void){
 	head = NULL; //empty
+	
 	printf("how many numbers?\n");
 	int n,i,x,y,z;
 	scanf("%d", &n);
@@ -29,13 +32,17 @@ int main(void){
 	scanf("%d", &z);
 	deleteAt(z);
 	print();
-	
-	system("pause>0");
+
+	reverse();
+	printf("\nreverse ");
+	print();
+	printf("\n");
+
 	return 0;
 }
 
 void insertAt(int data, int n){
-	Node* temp = new Node(); // u can use "struct Node* temp = (Node*) malloc(sizeof(struct Node));" instead
+	struct Node* temp = (Node*) malloc(sizeof(struct Node));
 	temp->data = data;
 	temp->next = NULL;
 	if(n == 1){
@@ -70,6 +77,20 @@ void deleteAt(int n){
 	temp->next = curr->next;
 	
 	delete curr; //for C lang, must use "free();" function
+}
+
+void reverse(){
+	struct Node* temp = head;
+	struct Node* next = NULL;
+	struct Node* prev = NULL;
+	while(temp != NULL){
+		next = temp->next;
+		temp->next = prev;
+		prev = temp;
+		temp = next;
+	}
+
+	head = prev;
 }
 
 void print(){
